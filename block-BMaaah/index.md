@@ -3,8 +3,48 @@ writeCode
 Write code to execute below expressions.
 
 1. Create a database named `blog`.
+   //use blog
+
 2. Create a collection called 'articles'.
+   //db.createCollection('articles')
+
 3. Insert multiple documents(at least 3) into articles. It should have fields
+   //var articles = [
+   {
+   title: 'Rich dad poor dad',
+   createdAt: Date('2000-05-21'),
+   details: 'book on financial education',
+   author: {
+   name: 'Robert T.kayosaki',
+   email: 'robertk@gmail.com',
+   age: '55'
+   },
+   tags: ['book', 'finance']
+   },
+   {
+   title: 'In love',
+   createdAt: Date('2002-05-21'),
+   details: 'a memoir of loss and love',
+   author: {
+   name: 'Amy Bloom',
+   email: 'bloom@gmail.com',
+   age: '48'
+   },
+   tags: ['book', 'loss', 'love']
+   },
+   {
+   title: 'The Candy House',
+   createdAt: Date('2004-05-21'),
+   details: 'a visit from the goon squad',
+   author: {
+   name: 'Jennifer Egan',
+   email: 'EganJ@gmail.com',
+   age: '57'
+   },
+   tags: ['candy', 'egan', 'book', 'anticipated']
+   }
+   ]
+   db.articles.insertMany(articles)
 
 - title as string
 - createdAt as date
@@ -30,26 +70,47 @@ Write code to execute below expressions.
   },
   tags: ['js', 'mongo']
 }
+
 ```
 
 4. Find all the articles using `db.COLLECTION_NAME.find()`
+   //db.articles.find()
+
 5. Find a document using \_id field.
+   //db.articles.find({\_id: ObjectId("6309d18d25b1e1d3c5ef4de3")})
+
 6. 1. Find documents using title
+      //db.articles.find({title: 'In love'})
+
 7. 2. Find documents using author's name field.
+      //
+
 8. Find document using a specific tag.
+   //db.articles.find({tags: 'candy'})
 
 9. Update title of a document using its \_id field.
+   //db.articles.update({\_id : ObjectId("6309d64025b1e1d3c5ef4de6")}, {$set: {createdAt: Date('2022-05-22')}})
+
 10. Update a author's name using article's title.
+    //
+
 11. rename details field to description from all articles in articles collection.
+    //db.articles.updateMany({}, {$rename: {"details": "description"}}, false, true)
+
 12. Add additional tag in a specific document.
+    //db.articles.update({title: 'In love'}, {$push: {tags: "hate"}})
 
 13. Update an article's title using $set and without $set.
+//db.articles.update({title: 'In love'}, {$set: {createdAt: Date("2022-02-55")}})
+    //db.articles.update({title: 'In love'}, {title: "In love with u"})
 
 - Write the differences here ?
+  the difference is when we use set it onlu modifies that single data but when set is not used it delete rest data and saves only that
 
 13. find an article using title and increment it's auhtor's age by 5.
 
 14. Delete a document using \_id field with `db.COLLECTION_NAME.remove()`.
+    //db.articles.remove({\_id: ObjectId("6309d64025b1e1d3c5ef4de5")})
 
 // Sample data
 
@@ -168,6 +229,12 @@ db.users.insertMany([
 Insert above data into database to perform below queries:-
 
 - Find all males who play cricket.
+  //db.users.find({sports: {$all: ['cricket']}})
+
 - Update user with extra golf field in sports array whose name is "Steve Ortega".
+  //db.users.update({name: 'Steve Ortega'}, {$push: {sports: 'golf'}})
+
 - Find all users who play either 'football' or 'cricket'.
+  //db.users.find({sports: {$all: ['cricket', 'football']}})
+
 - Find all users whose name includes 'ri' in their name.
